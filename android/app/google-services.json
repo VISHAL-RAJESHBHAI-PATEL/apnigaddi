@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "274353666768",
+    "project_id": "apnigaddi-f21e5",
+    "storage_bucket": "apnigaddi-f21e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274353666768:android:eccaa4ba1e7e7f4514bcd5",
+        "android_client_info": {
+          "package_name": "com.arunbalaji.apnigaddi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274353666768-gsik2teubn3cvllp7jd3o33kpv42rf06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9cNP002CL3eC-GLZwSmwkw94LyW0qR-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274353666768-gsik2teubn3cvllp7jd3o33kpv42rf06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
