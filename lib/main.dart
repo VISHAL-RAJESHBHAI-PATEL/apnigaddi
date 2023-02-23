@@ -13,9 +13,8 @@ Future<void> main() async {
   Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var userName = prefs.getBool("userName");
-  runApp(MyApp(screen: (userName==null) ? OtpHome() : HomeScreen()));
+  runApp(MyApp(screen: (userName == null) ? OtpHome() : HomeScreen()));
 }
-
 
 class MyApp extends StatelessWidget {
   final Widget screen;
@@ -24,16 +23,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Share MyRide',
+      title: 'Apni Gaddi',
       //test phase
       home: screen,
       routes: {
-        '/otphome' : (context) => OtpHome(),
-        '/otppage' : (context) => OtpPage(),
-        '/homescreen' : (context) => HomeScreen(),
-        '/register'   : (context) => SignUp(),
-        '/profile'    : (context) => ProfilePage(),
-        '/findaride' : (context) => FindaRide(),
+        '/otphome': (context) => OtpHome(),
+        '/otppage': (context) => OtpPage(),
+        '/homescreen': (context) => HomeScreen(),
+        '/register': (context) => SignUp(),
+        '/profile': (context) => ProfilePage(),
+        '/findaride': (context) => FindaRide(),
       },
     );
   }

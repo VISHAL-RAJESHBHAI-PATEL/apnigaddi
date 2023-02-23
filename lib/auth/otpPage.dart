@@ -40,7 +40,6 @@ class OtpPageState extends State<OtpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       backgroundColor: Color(0xFFeaeaea),
       body: Container(
         child: Column(
@@ -74,40 +73,36 @@ class OtpPageState extends State<OtpPage> {
               ),
             ),
             Container(
-
               padding: EdgeInsets.fromLTRB(20, 40.0, 0.0, 0.0),
               child: Text(
                 "Verifying your number!",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-
             Container(
-
               padding: EdgeInsets.fromLTRB(20, 10.0, 20.0, 0.0),
-              child:RichText(
+              child: RichText(
                 text: TextSpan(
                   text: 'Please type the verification code sent to  ',
-                  style: TextStyle(fontSize: 20,color: Colors.black),
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                   children: <TextSpan>[
-                    TextSpan(text: "+91 ${widget.phone}", style: TextStyle(fontSize:18.0, fontWeight: FontWeight.bold,color: Colors.blue)),
-
+                    TextSpan(
+                        text: "+91 ${widget.phone}",
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue)),
                   ],
                 ),
               ),
-
             ),
             Column(
-
               children: <Widget>[
-
-
-
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: Image(
-                    image: AssetImage('assets/otp_icon.png'),
+                    image: AssetImage('../../assets/otp_icon.png'),
                     height: 120.0,
                     width: 120.0,
                   ),

@@ -15,7 +15,6 @@ import 'package:klndrive/misc/convertTime.dart';
 
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-
 class FindaRide extends StatefulWidget {
   @override
   _FindaRideState createState() => _FindaRideState();
@@ -49,7 +48,6 @@ class _FindaRideState extends State<FindaRide> {
   String vehicleno = "";
   String email = "";
 
-
   //booleans for widgets' visibility
   bool showStartingScreen = true;
   bool isTouchable = false;
@@ -76,8 +74,18 @@ class _FindaRideState extends State<FindaRide> {
   }
 
   void getCurrentPosition() async {
-    Position currentPosition = await GeolocatorPlatform.instance
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    } else {
+      throw Exception('Error');
+    }
+    Position currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     setState(() {
       position = currentPosition;
       mapToggle = true;
@@ -157,10 +165,10 @@ class _FindaRideState extends State<FindaRide> {
   void initMarker(specify, specifyID) async {
     var markerIdval = specifyID;
     final MarkerId markerId = MarkerId(markerIdval);
-    final Marker marker =  Marker(
+    final Marker marker = Marker(
       markerId: markerId,
       icon: bitmapImage,
-      position:  LatLng(specify['locationpoint'].latitude,
+      position: LatLng(specify['locationpoint'].latitude,
           specify['locationpoint'].longitude),
       infoWindow:
           InfoWindow(title: specify['username'], snippet: specify['address']),
@@ -245,20 +253,19 @@ class _FindaRideState extends State<FindaRide> {
         padding: EdgeInsets.only(left: 20.0, right: 20.0, top: top),
         child: TypeAheadField(
           textFieldConfiguration: TextFieldConfiguration(
-              autofocus: false,
-              controller: _controller,
-
-              decoration:InputDecoration(
-                filled: true,
-                prefixIcon: Icon(
-                  Icons.location_on,
-                  color: clr,
-                ),
-                hintText: str,
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15.0, top: 16.0),
-                fillColor: Colors.white,
+            autofocus: false,
+            controller: _controller,
+            decoration: InputDecoration(
+              filled: true,
+              prefixIcon: Icon(
+                Icons.location_on,
+                color: clr,
               ),
+              hintText: str,
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(left: 15.0, top: 16.0),
+              fillColor: Colors.white,
+            ),
           ),
           suggestionsCallback: (pattern) async {
             return CitiesService.getSuggestions(pattern);
@@ -271,12 +278,6 @@ class _FindaRideState extends State<FindaRide> {
           onSuggestionSelected: (suggestion) {
             _controller.text = suggestion;
           },
-
-
-
-
-
-
         ),
       ),
     );
@@ -462,24 +463,30 @@ class _FindaRideState extends State<FindaRide> {
                   'timestamp': Timestamp.now(),
                 });
 
-
                 Navigator.pop(context);
                 showDialog(
-                    context: context,
-                    builder: (context) => new AlertDialog(
-                      title: new Text('Success',textAlign: TextAlign.center,style: TextStyle(color: Colors.green,fontSize: 20,fontWeight: FontWeight.bold),),
-                      content: Text(
-                        'Your ride was shared. \nWait for confirmation call'),
-                      actions: <Widget>[
-                        new TextButton(
-                          onPressed: () {
-                          Navigator.of(context, rootNavigator: true)
-                            .pop(); // dismisses only the dialog and returns nothing
-                      },
-                        child: new Text('OK'),
+                  context: context,
+                  builder: (context) => new AlertDialog(
+                    title: new Text(
+                      'Success',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ],
-                ),
+                    content: Text(
+                        'Your ride was shared. \nWait for confirmation call'),
+                    actions: <Widget>[
+                      new TextButton(
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pop(); // dismisses only the dialog and returns nothing
+                        },
+                        child: new Text('OK'),
+                      ),
+                    ],
+                  ),
                 );
               },
               child: Text(
@@ -533,7 +540,6 @@ class _FindaRideState extends State<FindaRide> {
         zoomGesturesEnabled: true,
         onMapCreated: onMapCreated,
         markers: Set<Marker>.of(markers.values),
-
         onTap: _onMapTap,
       ),
     );
@@ -563,10 +569,4 @@ class _FindaRideState extends State<FindaRide> {
     _mapController = controller;
     // _mapController.setMapStyle(mapStyle);
   }
-
-
-
-
-
-
 }
